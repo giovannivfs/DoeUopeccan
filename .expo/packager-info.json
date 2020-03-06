@@ -1,9 +1,9 @@
 {
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 16252,
-  "expoServerNgrokUrl": "https://pr-6zq.giovannivfs.doe-uopeccan.exp.direct",
-  "packagerNgrokUrl": "https://packager.pr-6zq.giovannivfs.doe-uopeccan.exp.direct",
-  "ngrokPid": 19668,
+  "packagerPid": 17392,
+  "expoServerNgrokUrl": "https://i5-c6d.giovannivfs.doe-uopeccan.exp.direct",
+  "packagerNgrokUrl": "https://packager.i5-c6d.giovannivfs.doe-uopeccan.exp.direct",
+  "ngrokPid": 22132,
   "devToolsPort": 19002
 }

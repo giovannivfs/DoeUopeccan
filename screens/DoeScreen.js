@@ -7,6 +7,7 @@ import SwitchSelector from "react-native-switch-selector";
 import { CreditCardInput } from "react-native-input-credit-card";
 import { TextInputMask } from "react-native-masked-text";
 import AwesomeAlert from "react-native-awesome-alerts";
+import { StackActions, NavigationActions } from "react-navigation";
 
 console.disableYellowBox = true;
 
@@ -23,39 +24,75 @@ export default class DoeScreen extends Component {
     alertaBtnOkTexto: "Ok",
     alertaBtnNok: false,
     doar: false
-
   };
 
   alteraCartao = formData => {
     this.setState({ dados: formData.values, valido: formData.valid });
-    this.state.valido
+    this.state.valido;
   };
 
   alteraValor(valor) {
     this.setState({ valor });
   }
 
+  finalizar = async () => {
+    this.props.navigation.dispatch(
+      StackActions.reset({
+        index: 0,
+        key: null,
+        actions: [NavigationActions.navigate({ routeName: "Doe" })]
+      })
+    );
+  };
+
   validar() {
     if (
-      parseInt(this.state.valor.replace("R$", "").replace(".", "").replace(",", "")) === 0) {
-      this.setState({alertaConfirmacao: true,alertaTitulo: "Atenção", alertaTexto: "O valor para doação deve ser maior que R$ 0,00", doar: false })
+      parseInt(
+        this.state.valor
+          .replace("R$", "")
+          .replace(".", "")
+          .replace(",", "")
+      ) === 0
+    ) {
+      this.setState({
+        alertaConfirmacao: true,
+        alertaTitulo: "Atenção",
+        alertaTexto: "O valor para doação deve ser maior que R$ 0,00",
+        doar: false
+      });
     } else if (this.state.valido === false) {
-      this.setState({alertaConfirmacao: true,alertaTitulo: "Atenção", alertaTexto: "Dados do cartão inválidos favor tente novamente", doar: false })
+      this.setState({
+        alertaConfirmacao: true,
+        alertaTitulo: "Atenção",
+        alertaTexto: "Dados do cartão inválidos favor tente novamente",
+        doar: false
+      });
     } else {
-      this.setState({alertaConfirmacao: true, alertaTitulo: "Doação", alertaTexto: "Confirmar doação?", alertaBtnNok: true, alertaBtnOkTexto: "Confirmar", doar: true})
+      this.setState({
+        alertaConfirmacao: true,
+        alertaTitulo: "Doação",
+        alertaTexto: "Confirmar doação?",
+        alertaBtnNok: true,
+        alertaBtnOkTexto: "Confirmar",
+        doar: true
+      });
     }
   }
 
-  doar() {
-    this.setState({alertaConfirmacao: false, doar: false, dados: []})
-    this.forceUpdate()
-  }
+  doar = async () => {
+    this.setState({ alertaConfirmacao: false, doar: false, dados: [] });
+    await this.finalizar();
+    this.props.navigation.navigate("Home", { doado: true });
+    Alert.alert("Doação", "Obrigado por realizar a doação");
+  };
 
   render() {
     const options = [
       { label: "Crédito", value: "credit" },
       { label: "Débito", value: "debit" }
     ];
+
+    const { navigete } = this.props.navigation;
 
     return (
       <SafeAreaView style={styles.container}>
@@ -118,10 +155,12 @@ export default class DoeScreen extends Component {
           confirmText={this.state.alertaBtnOkTexto}
           confirmButtonColor="#0e8a00"
           onCancelPressed={() => {
-            this.setState({alertaConfirmacao: false})
+            this.setState({ alertaConfirmacao: false });
           }}
           onConfirmPressed={() => {
-            this.state.doar ? this.doar() :  this.setState({alertaConfirmacao: false})
+            this.state.doar
+              ? this.doar()
+              : this.setState({ alertaConfirmacao: false });
           }}
         />
       </SafeAreaView>
@@ -140,7 +179,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginTop: 10
   },
-  containerRow:{
+  containerRow: {
     flexDirection: "row",
     justifyContent: "center"
   },
