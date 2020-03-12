@@ -122,6 +122,13 @@ export default class DoeScreen extends Component {
           />
         </View>
 
+        {/* <View style={{marginTop: 12, flexDirection: "row", justifyContent: "center"}}>
+          <Button title="+1" type="outline"   buttonStyle={styles.btnMais} titleStyle={{color: "#B10403"}} onPress={()=>this.addUm()}/>
+          <Button title="+10" type="outline"  buttonStyle={styles.btnMais} titleStyle={{color: "#B10403"}}/>
+          <Button title="+50" type="outline"  buttonStyle={styles.btnMais} titleStyle={{color: "#B10403"}}/>
+          <Button title="+100" type="outline" buttonStyle={styles.btnMais} titleStyle={{color: "#B10403"}}/>
+        </View> */}
+
         <View style={{ marginTop: 25 }}>
           <CreditCardInput
             labels={{ number: "Número Cartão", expiry: "Validade", cvc: "CVC" }}
@@ -189,5 +196,12 @@ const styles = StyleSheet.create({
     fontSize: 50,
     textAlign: "center",
     width: 280
+  },
+  btnMais:{
+    borderRadius: 25,
+    width: 55,
+    marginRight:7.5,
+    marginRight: 7.5,
+    borderColor: "#B10403"
   }
 });
